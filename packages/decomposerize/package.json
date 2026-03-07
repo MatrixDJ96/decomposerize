@@ -11,11 +11,11 @@
   ],
   "license": "MIT",
   "scripts": {
+    "lint": "make eslint",
     "test": "make test",
     "build": "make build",
     "rebuild": "make rebuild",
-    "release": "make release",
-    "jest": "jest --no-watchman"
+    "release": "make release"
   },
   "devDependencies": {
     "@babel/cli": "^7.x",
