@@ -1,4 +1,4 @@
-.PHONY: node_modules eslint test clean build rebuild release install uninstall
+.PHONY: node_modules eslint test clean build rebuild release install uninstall publish
 
 PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
@@ -33,3 +33,6 @@ install:
 
 uninstall:
 	rm -f $(BINDIR)/decomposerize
+
+publish: rebuild
+	npm publish
