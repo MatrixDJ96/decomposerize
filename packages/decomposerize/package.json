@@ -2,14 +2,20 @@
   "name": "better-decomposerize",
   "version": "1.6.0",
   "main": "dist/decomposerize.js",
+  "bin": {
+    "decomposerize": "dist/cli.bundle.js"
+  },
+  "files": [
+      "dist/decomposerize.js",
+      "dist/cli.bundle.js"
+  ],
   "license": "MIT",
   "scripts": {
     "test": "make test",
     "build": "make build",
+    "rebuild": "make rebuild",
+    "release": "make release",
     "jest": "jest --no-watchman"
-  },
-  "bin": {
-    "decomposerize": "cli.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.x",
@@ -36,10 +42,6 @@
     "composeverter": "latest",
     "core-js": "^2.5.5"
   },
-  "files": [
-    "dist/decomposerize.js",
-    "cli.js"
-  ],
   "eslintConfig": {
     "env": {
       "node": true,
