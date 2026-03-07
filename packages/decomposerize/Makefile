@@ -1,4 +1,7 @@
-.PHONY: node_modules eslint test clean build rebuild release
+.PHONY: node_modules eslint test clean build rebuild release install uninstall
+
+PREFIX ?= /usr/local
+BINDIR = $(PREFIX)/bin
 
 node_modules:
 	yarn
@@ -24,3 +27,9 @@ rebuild: clean build
 release: rebuild
 	node --build-sea sea-config.json
 	chmod +x dist/decomposerize
+
+install:
+	install -m 755 dist/decomposerize $(BINDIR)/decomposerize
+
+uninstall:
+	rm -f $(BINDIR)/decomposerize
