@@ -1,6 +1,6 @@
 {
   "name": "better-decomposerize",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "main": "dist/decomposerize.js",
   "bin": {
     "decomposerize": "dist/cli.bundle.js"
@@ -45,7 +45,7 @@
   "eslintConfig": {
     "env": {
       "node": true,
-      "browser": true
+      "console": true
     }
   }
 }
