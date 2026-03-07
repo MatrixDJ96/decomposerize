@@ -1,12 +1,12 @@
 {
-  "name": "shawiizz-decomposerize",
-  "version": "1.5.5",
+  "name": "better-decomposerize",
+  "version": "1.6.0",
   "main": "dist/decomposerize.js",
   "license": "MIT",
   "scripts": {
     "test": "make test",
     "build": "make build",
-    "jest": "node_modules/.bin/jest --no-watchman"
+    "jest": "jest --no-watchman"
   },
   "bin": {
     "decomposerize": "cli.js"
