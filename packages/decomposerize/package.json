@@ -1,6 +1,6 @@
 {
   "name": "better-decomposerize",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "main": "dist/decomposerize.js",
   "bin": {
     "decomposerize": "dist/cli.bundle.js"
