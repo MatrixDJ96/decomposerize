@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const decomposerize = require('./dist/decomposerize.js');
 
-let file = '';
+let file = null;
 
 const config = {
     dockerRunCommand: 'docker run',
@@ -141,7 +141,7 @@ args.map((arg) => (arg === '-h' ? '--help' : arg)).forEach((arg) => {
     }
 });
 
-if (file) {
+if (file !== null) {
     execute(fs.readFileSync(file, 'utf8'));
 } else if (!process.stdin.isTTY) {
     let content = '';
