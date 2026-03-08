@@ -1,54 +1,109 @@
-# decomposerize
+# better-decomposerize
 
-[![npm](https://img.shields.io/npm/v/decomposerize.svg)](https://www.npmjs.com/package/decomposerize)
-[![ShareVB on GitHub](https://img.shields.io/badge/ShareVB-100000?logo=github&logoColor=white)](https://github.com/sharevb)
-            
-http://decomposerize.com - Turns docker-compose file into `docker run` commands!
+[![npm](https://img.shields.io/npm/v/better-decomposerize.svg)](https://www.npmjs.com/package/better-decomposerize)
+[![MatrixDJ96 on GitHub](https://img.shields.io/badge/MatrixDJ96-100000?logo=github&logoColor=white)](https://github.com/MatrixDJ96)
 
-Looking for the reverse : http://composerize.com / [Composerize](https://github.com/magicmark/composerize)
+https://decomposerize.com - Turns Docker Compose files into `docker run` commands.
 
-Want to convert from Docker compose file formats : http://composeverter.com / [Composeverter](https://github.com/outilslibre/composeverter)
+Looking for the reverse? https://composerize.com / [Composerize](https://github.com/magicmark/composerize)
+
+Want to convert between Docker Compose file formats? https://composeverter.com / [Composeverter](https://github.com/outilslibre/composeverter)
 
 ## CLI
 
-decomposerize can be run in the cli.
-
-`npm install decomposerize -g` to install, and run as such:
+Install globally:
 
 ```bash
-$ decomposerize << docker-compose.yml
+npm install -g better-decomposerize
 ```
 
-# API
-
-**convertToDockerRunCommands(dockerComposeContent, configuration={})**
-
-   - `dockerComposeContent`: A string representing the Docker Compose file input.
-   - `configuration`: optional configuration options in form of an object
-	   - `command`: A string that defines the Docker command to generate (e.g., 'docker run', 'docker create', 'docker container run'). It has a default value of 'docker run'.
-	   - `rm`: A boolean that, when true, adds the '--rm' option to the command line arguments. The default value is `false`.
-	   - `detach`: A boolean that, when true, adds the '-d' option to the command line arguments. The default value is `false`.
-	   - `multiline`: A boolean that, when true, emits the command in multiline shell command format. The default value is `false`.
-	   - `'long-args'`: A boolean that, when true, emits long command line arguments (e.g., '--tty' instead of '-t'). The default value is `false`.
-	   - `'arg-value-separator'`: A string representing the separator used between command arguments and their values. It can be either ' ' (space) or '='. The default value is ' ' (space).
-
-**returns**
-
-It returns the Docker run command(s) generated based on the input Docker Compose file and the provided configuration
-
-# How to use with node.js
-
-Make sure to install the `composerize` package in your project by running:
+The installed command is still:
 
 ```bash
-npm install decomposerize
+decomposerize
 ```
 
-With the following code, you can easily integrate **Decomposerize** into your Node.js project and generate Docker run command(s) from Docker Compose configurations.
+Basic usage:
 
+```bash
+decomposerize docker-compose.yml
+```
 
-```javascript
-const convertToDockerRunCommands = require('decomposerize');
+Options can be placed before the compose file:
+
+```bash
+decomposerize --docker-run --multiline docker-compose.yml
+```
+
+If input is piped or redirected, the CLI reads from `stdin`:
+
+```bash
+cat docker-compose.yml | decomposerize --docker-run
+decomposerize --docker-run < docker-compose.yml
+```
+
+If neither a compose file nor `stdin` input is provided, the CLI exits with an error and prints the help message.
+
+### CLI options
+
+```text
+Usage: decomposerize [options] <compose-file>
+```
+
+- `--help`, `-h`
+- `--services=service1,service2`
+- `--docker-run`
+- `--docker-run-command=<cmd>`
+- `--docker-run-rm`
+- `--docker-run-detach`
+- `--docker-build`
+- `--stop-and-remove`
+- `--create-volumes`
+- `--create-networks`
+- `--delete-images`
+- `--ansible-env-vars-format`
+- `--multiline`
+- `--long-args`
+- `--arg-value-separator=<sep>`
+
+## API
+
+The package exports a function:
+
+```js
+const decomposerize = require('better-decomposerize');
+```
+
+### Signature
+
+```js
+decomposerize(dockerComposeContent, configuration = {})
+```
+
+- `dockerComposeContent`: a string containing the Docker Compose YAML.
+- `configuration`: optional configuration object.
+
+Supported configuration fields:
+
+- `services: string[]`
+- `stopAndRemoveContainers: boolean`
+- `createVolumes: boolean`
+- `createNetworks: boolean`
+- `dockerBuild: boolean`
+- `dockerRun: boolean`
+- `dockerRunCommand: string`
+- `dockerRunRm: boolean`
+- `dockerRunDetach: boolean`
+- `deleteImages: boolean`
+- `ansibleEnvVarsFormat: boolean`
+- `multiline: boolean`
+- `'long-args': boolean`
+- `'arg-value-separator': ' ' | '='`
+
+### Example
+
+```js
+const decomposerize = require('better-decomposerize');
 
 const dockerComposeInput = `
 version: '3'
@@ -58,30 +113,84 @@ services:
 `;
 
 const configuration = {
-  command: 'docker run',
-  rm: true,
-  detach: false,
+  dockerRun: true,
+  dockerRunCommand: 'docker run',
+  dockerRunRm: true,
+  dockerRunDetach: false,
   multiline: true,
   'long-args': false,
   'arg-value-separator': ' ',
 };
 
-const dockerRunCommands = convertToDockerRunCommands(dockerComposeInput, configuration);
+const output = decomposerize(dockerComposeInput, configuration);
 
-console.log('Generated Docker Run Commands:');
-console.log(dockerRunCommands);
+console.log(output);
+```
+
+## Development
+
+This package uses `make` for common tasks:
+
+```bash
+make eslint
+make test
+make build
+make rebuild
+make release
+make publish
+```
+
+### Build outputs
+
+- `dist/decomposerize.js` → library bundle
+- `dist/cli.bundle.js` → bundled npm CLI
+- `dist/decomposerize` → standalone executable built with Node SEA
+
+## Standalone binary
+
+Build the standalone executable:
+
+```bash
+make release
+```
+
+Run it:
+
+```bash
+./dist/decomposerize docker-compose.yml
+```
+
+Install it system-wide:
+
+```bash
+sudo make install
+```
+
+Install it under a custom prefix:
+
+```bash
+make install PREFIX=$HOME/.local
+```
+
+Uninstall it:
+
+```bash
+sudo make uninstall
+make uninstall PREFIX=$HOME/.local
 ```
 
 ## Contributing
 
-- [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn`
-- Make your changes, and build the project by running `make build`
-- Test your changes with `make test`
-
-### yarn version
-
-Needs yarn@1.19.1. See https://github.com/yarnpkg/yarn/issues/7734.
+- Clone a fork of the repo and install dependencies with `yarn`
+- Make your changes and build them with `make build`
+- Run `make test`
 
 ## Maintainers
 
-- ShareVB [GitHub](https://github.com/sharevb)
+- MatrixDJ96 [GitHub](https://github.com/MatrixDJ96)
+- Fork project: Shawiizz [GitHub](https://github.com/Shawiizz)
+- Original project: ShareVB [GitHub](https://github.com/sharevb)
+
+## License
+
+MIT
