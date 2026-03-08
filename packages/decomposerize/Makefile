@@ -4,7 +4,7 @@ PREFIX ?= /usr/local
 BINDIR = $(PREFIX)/bin
 
 node_modules:
-	yarn
+	yarn install
 
 eslint: node_modules
 	yarn run eslint cli.js src/**/*.js --fix --format codeframe
