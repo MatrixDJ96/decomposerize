@@ -1,13 +1,13 @@
 {
   "name": "better-decomposerize",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "main": "dist/decomposerize.js",
   "bin": {
     "decomposerize": "dist/cli.bundle.js"
   },
   "files": [
-      "dist/decomposerize.js",
-      "dist/cli.bundle.js"
+    "dist/decomposerize.js",
+    "dist/cli.bundle.js"
   ],
   "license": "MIT",
   "scripts": {
