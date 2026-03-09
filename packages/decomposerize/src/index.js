@@ -341,7 +341,7 @@ export default (input: string, configuration: Configuration = {}): ?string => {
         commandOptions.push(service.image);
 
         // Set container name if not set (using image name by default)
-        if (!commandOptions.find(opt => opt.startsWith('--name'))) {
+        if (!commandOptions.find((opt) => opt.startsWith('--name'))) {
             commandOptions.unshift(`--name ${service.container_name || service.image.split(':')[0]}`);
         }
 
