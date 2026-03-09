@@ -39,8 +39,7 @@
     "rollup-plugin-uglify": "6.x"
   },
   "dependencies": {
-    "composeverter": "latest",
-    "core-js": "^2.5.5"
+    "composeverter": "^1.7.5"
   },
   "eslintConfig": {
     "env": {

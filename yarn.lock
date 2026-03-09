@@ -4461,10 +4461,10 @@ compare-func@^2.0.0:
     array-ify "^1.0.0"
     dot-prop "^5.1.0"
 
-composeverter@latest:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/composeverter/-/composeverter-1.7.4.tgz#6addce3b420ae92aca4d1d45193cca6b2cdbe904"
-  integrity sha512-hcx+pdBTiqbL3CAQMYdwICBApQpzcLTHruYQCFVG3plR9YG1s7mNNvgi+tajygCK41B44EckTGDenwRxdKVkUQ==
+composeverter@^1.7.5:
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/composeverter/-/composeverter-1.7.5.tgz#490485be273c18c08d57ab7fd014d6c52094216a"
+  integrity sha512-XUPZdktweMFFMk7oLFOOFZeuZ4U0jY/MpisUmRkHImybn9PvixceiKGVMMwSL19P9Mr5Ty1A7bmG2lFWn5UWTA==
   dependencies:
     ajv "^8.x"
     ajv-errors "^3.x"
