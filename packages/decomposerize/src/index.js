@@ -258,10 +258,10 @@ export default (input: string, configuration: Configuration = {}): ?string => {
                                 if (type === 'Array') return;
 
                                 Object.entries(v).forEach(([kk, vv]) => {
-                                    pushOption(vv !== null ? `${kk}=${stringify(vv)}` : kk);
+                                    pushOption(vv !== null ? `${kk}=${shellify(vv)}` : kk);
                                 });
                             } else {
-                                const stringValue = String(stringify(v));
+                                const stringValue = String(shellify(v));
                                 if (type === 'ArrayAutoRepair') {
                                     if (!stringValue.includes('=')) {
                                         pushOption(stringValue.replace(/:/, '='));
@@ -272,12 +272,12 @@ export default (input: string, configuration: Configuration = {}): ?string => {
                             }
                         });
                     } else if (typeof targetValue === 'string') {
-                        pushOption(stringify(targetValue));
+                        pushOption(shellify(targetValue));
                     } else {
                         Object.entries(targetValue).forEach(([k, v]) => {
                             pushOption(
                                 v !== null
-                                    ? `${k}=${config.ansibleEnvVarsFormat ? '"' : ''}${stringify(v)}${config.ansibleEnvVarsFormat ? '"' : ''}`
+                                    ? `${k}=${config.ansibleEnvVarsFormat ? '"' : ''}${shellify(v)}${config.ansibleEnvVarsFormat ? '"' : ''}`
                                     : k,
                             );
                         });
@@ -297,7 +297,7 @@ export default (input: string, configuration: Configuration = {}): ?string => {
                     if (targetValue.toString() === 'true') pushOption('');
                 }
                 if (type === 'Value') {
-                    pushOption(stringify(targetValue));
+                    pushOption(shellify(targetValue));
                 }
                 if (type === 'IntValue') {
                     pushOption(String(targetValue));
@@ -325,13 +325,13 @@ export default (input: string, configuration: Configuration = {}): ?string => {
                         if (typeof v !== 'object') return;
 
                         const mapValues = [];
-                        Object.entries(v).forEach(([key, vv]) => mapValues.push(`${key}=${stringify(vv)}`));
+                        Object.entries(v).forEach(([key, vv]) => mapValues.push(`${key}=${shellify(vv)}`));
                         pushOption(String(mapValues.join(',')));
                     });
                 }
                 if (type === 'Map') {
                     const mapValues = [];
-                    Object.entries(targetValue).forEach(([key, vv]) => mapValues.push(`${key}=${stringify(vv)}`));
+                    Object.entries(targetValue).forEach(([key, vv]) => mapValues.push(`${key}=${shellify(vv)}`));
                     pushOption(String(mapValues.join(',')));
                 }
             });
