@@ -75,13 +75,26 @@ export default (input: string, configuration: Configuration = {}): ?string => {
         composeJson.services = filteredServices;
     }
 
-    const stringify = (value: any): string => {
+    // Converts a value into a shell-safe argument (handles quoting and escaping)
+    const shellify = (value: any): string => {
         const stringValue = String(value);
-        if (stringValue.match(/[\s"]/)) {
-            const escapedString = stringValue.replace('"', '\\"');
-            return String(`"${escapedString}"`);
+
+        if (/[\n\r\t]/.test(stringValue)) {
+            const escaped = stringValue
+                .replace(/\\/g, '\\\\')
+                .replace(/'/g, "\\'")
+                .replace(/\n/g, '\\n')
+                .replace(/\r/g, '\\r')
+                .replace(/\t/g, '\\t');
+
+            return `$'${escaped}'`;
         }
-        return stringValue;
+
+        if (!/[\s"'\\$!`&|;<>(){}\[\]*?#~]/.test(stringValue)) {
+            return stringValue;
+        }
+
+        return `'${stringValue.replace(/'/g, `'\\''`)}'`;
     };
 
     const commands = [];
