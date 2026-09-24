@@ -9,6 +9,8 @@ Looking for the reverse? https://composerize.com / [Composerize](https://github.
 
 Want to convert between Docker Compose file formats? https://composeverter.com / [Composeverter](https://github.com/outilslibre/composeverter)
 
+Contents: CLI · API · Development · Standalone binary · Contributing · Maintainers · License.
+
 ## CLI
 
 Install globally:
@@ -17,7 +19,7 @@ Install globally:
 npm install -g better-decomposerize
 ```
 
-The installed command is still:
+The installed command is:
 
 ```bash
 decomposerize
